@@ -13,7 +13,7 @@ import com.naufal.core.data.source.local.model.anime.AnimeEntity
 @TypeConverters(Converter::class)
 abstract class AnimeDatabase : RoomDatabase() {
 
-    abstract val animeDao: AnimeDao
+    abstract fun animeDao(): AnimeDao
 
     companion object {
         const val DATABASE_NAME = "anime_db"

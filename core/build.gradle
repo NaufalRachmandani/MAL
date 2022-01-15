@@ -42,6 +42,7 @@ dependencies {
 
     // Room
     api "androidx.room:room-runtime:2.4.0"
+    implementation 'androidx.test:runner:1.4.0'
     kapt "androidx.room:room-compiler:2.4.0"
     // Kotlin Extensions and Coroutines support for Room
     api "androidx.room:room-ktx:2.4.0"

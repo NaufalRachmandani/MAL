@@ -11,7 +11,7 @@
         android:name=".MyApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MAL">
+        android:theme="@style/Theme.App.Starting">
         <activity
             android:name=".home.MainActivity"
             android:exported="true">

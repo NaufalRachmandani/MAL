@@ -17,7 +17,7 @@ import java.io.IOException
 class AnimeRepositoryImpl (private val myAnimeListApi: MyAnimeListApi, private val animeDao: AnimeDao) :
     AnimeRepository {
 
-    override suspend fun getAnimeTop(): Flow<Resource<List<Anime>>> = flow {
+    override fun getAnimeTop(): Flow<Resource<List<Anime>>> = flow {
         try {
             emit(Resource.Loading())
             val response = myAnimeListApi.getAnimeTop(1).data?.map { it.toAnime() } ?: mutableListOf()
@@ -29,7 +29,7 @@ class AnimeRepositoryImpl (private val myAnimeListApi: MyAnimeListApi, private v
         }
     }
 
-    override suspend fun getAnimeCharacters(id: String): Flow<Resource<List<CharacterData>>> =
+    override fun getAnimeCharacters(id: String): Flow<Resource<List<CharacterData>>> =
         flow {
             try {
                 emit(Resource.Loading())
@@ -44,7 +44,7 @@ class AnimeRepositoryImpl (private val myAnimeListApi: MyAnimeListApi, private v
             }
         }
 
-    override suspend fun getAnimeSearch(q: String, type: String): Flow<Resource<List<Anime>>> =
+    override fun getAnimeSearch(q: String, type: String): Flow<Resource<List<Anime>>> =
         flow {
             try {
                 emit(Resource.Loading())
@@ -59,7 +59,7 @@ class AnimeRepositoryImpl (private val myAnimeListApi: MyAnimeListApi, private v
             }
         }
 
-    override suspend fun getAnimeFavorite(): Flow<List<AnimeEntity>> {
+    override fun getAnimeFavorite(): Flow<List<AnimeEntity>> {
         return animeDao.getAnimeList()
     }
 
@@ -71,5 +71,5 @@ class AnimeRepositoryImpl (private val myAnimeListApi: MyAnimeListApi, private v
         animeDao.deleteAnime(animeEntity)
     }
 
-    override suspend fun exist(id: Int): Flow<Boolean> = animeDao.exists(id)
+    override fun exist(id: Int): Flow<Boolean> = animeDao.exists(id)
 }
