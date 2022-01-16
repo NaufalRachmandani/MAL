@@ -4,17 +4,18 @@
     <string name="anime_image">Anime Image</string>
     <string name="anime_title">Anime Title</string>
     <string name="unknown_anime_title">Unknown Anime Title</string>
-    <string name="type_eps">%s (%d eps)</string>
+    <string name="type_eps">%s (%s)</string>
     <string name="unknown_type">Unknown Type</string>
     <string name="unknown_eps">\?</string>
-    <string name="unknown_type_eps">Unknown Type (?)</string>
     <string name="unknown_season">Unknown Season</string>
     <string name="unknown_year">Unknown Year</string>
-    <string name="unknown_season_year">Unknown Season Unknown Year</string>
     <string name="season_year">%s %s</string>
-    <string name="rank">Rank #%d</string>
+    <string name="rank">Rank #%s</string>
     <string name="unknown_rank">Unknown Rank</string>
-    <string name="score">%f</string>
+    <string name="score">%s</string>
     <string name="unknown_score">--</string>
     <string name="star_icon">Star Icon</string>
+    <string name="error">Error</string>
+    <string name="error_try_again">Error, Try Again</string>
+    <string name="refresh">Refresh</string>
 </resources>
