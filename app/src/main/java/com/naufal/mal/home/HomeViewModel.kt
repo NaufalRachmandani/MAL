@@ -35,6 +35,7 @@ class HomeViewModel(
                 }.catch {
                     Log.i("HomeViewModel", "getAnimeTop: error ${it.message}")
                     _isLoading.postValue(false)
+                    _animeTop.postValue(Resource.Error("${it.message}"))
                 }.collect {
                     Log.i("HomeViewModel", "getAnimeTop: collect")
                     _isLoading.postValue(false)

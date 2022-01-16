@@ -1,17 +1,17 @@
 package com.naufal.mal.home
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.naufal.core.data.source.remote.Resource
-import com.naufal.mal.R
 import com.naufal.mal.databinding.ActivityMainBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class MainActivity : AppCompatActivity() {
 
     private val homeViewModel: HomeViewModel by viewModel()
-    private var binding: ActivityMainBinding? = null
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,10 +23,26 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        initiateObserver()
+        initiateUI()
+        initiateData()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        binding = null
+    private fun initiateObserver() {
+
+    }
+
+    private fun initiateUI() {
+//        val myString = "Mary"
+//        val myInt = 12
+//        val formatted = getString(R.string.my_xml_string, myString, myInt)
+        binding.shimmerViewContainer.startShimmer()
+        binding.shimmerViewContainer.visibility = View.VISIBLE
+    }
+
+    private fun initiateData() {
+
     }
 }

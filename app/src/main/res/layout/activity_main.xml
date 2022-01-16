@@ -1,18 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".home.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <include layout="@layout/toolbar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/normal"
+            android:paddingBottom="@dimen/normal"
+            android:layout_marginStart="@dimen/very_small"
+            android:layout_marginEnd="@dimen/very_small"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            tools:listitem="@layout/item_anime" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/very_small"
+            android:layout_marginEnd="@dimen/very_small"
+            android:paddingTop="@dimen/normal"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/item_anime_placeholder" />
+
+                <include layout="@layout/item_anime_placeholder" />
+
+                <include layout="@layout/item_anime_placeholder" />
+
+                <include layout="@layout/item_anime_placeholder" />
+
+                <include layout="@layout/item_anime_placeholder" />
+
+                <include layout="@layout/item_anime_placeholder" />
+
+                <include layout="@layout/item_anime_placeholder" />
+
+                <include layout="@layout/item_anime_placeholder" />
+
+                <include layout="@layout/item_anime_placeholder" />
+
+                <include layout="@layout/item_anime_placeholder" />
+
+                <include layout="@layout/item_anime_placeholder" />
+
+                <include layout="@layout/item_anime_placeholder" />
+
+                <include layout="@layout/item_anime_placeholder" />
+
+                <include layout="@layout/item_anime_placeholder" />
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
