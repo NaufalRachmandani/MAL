@@ -33,7 +33,6 @@
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/very_small"
             android:layout_marginEnd="@dimen/very_small"
-            android:orientation="vertical"
             android:paddingTop="@dimen/normal"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/toolbar">

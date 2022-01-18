@@ -1,5 +1,6 @@
 package com.naufal.mal.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.naufal.core.data.source.remote.Resource
 import com.naufal.mal.databinding.ActivityMainBinding
+import com.naufal.mal.detail.DetailAnimeActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -21,10 +23,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val adapter by lazy {
-        AnimeItemAdapter(
+        AnimeAdapter(
             context = this,
             onClick = {
-
+                val intent = Intent(this, DetailAnimeActivity::class.java)
+                intent.putExtra(DetailAnimeActivity.ANIME, it)
+                startActivity(intent)
             },
         )
     }
@@ -111,11 +115,13 @@ class MainActivity : AppCompatActivity() {
     private fun showShimmer(show: Boolean) {
         binding.run {
             if (show) {
-                binding.shimmerViewContainer.startShimmer()
-                binding.shimmerViewContainer.visibility = View.VISIBLE
+                rvAnime.visibility = View.GONE
+                shimmerViewContainer.startShimmer()
+                shimmerViewContainer.visibility = View.VISIBLE
             } else {
-                binding.shimmerViewContainer.stopShimmer()
-                binding.shimmerViewContainer.visibility = View.GONE
+                rvAnime.visibility = View.VISIBLE
+                shimmerViewContainer.stopShimmer()
+                shimmerViewContainer.visibility = View.GONE
             }
         }
     }

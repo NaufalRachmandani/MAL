@@ -10,10 +10,10 @@ import com.naufal.mal.R
 import com.naufal.mal.databinding.ItemAnimeBinding
 import java.util.*
 
-class AnimeItemAdapter(
+class AnimeAdapter(
     private val context: Context,
     private val onClick: (Anime) -> Unit,
-) : RecyclerView.Adapter<AnimeItemAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<AnimeAdapter.ViewHolder>() {
 
     private var dataList: List<Anime> = Collections.emptyList()
 
@@ -50,19 +50,18 @@ class AnimeItemAdapter(
                 }
                 tvSeason.text = context.getString(R.string.season_year, season, year)
 
-                val rank = if (anime.rank == 0 || anime.rank == null) {
-                    context.getString(R.string.unknown_rank)
+                if (anime.rank == 0 || anime.rank == null) {
+                    tvRank.text = context.getString(R.string.unknown_rank)
                 } else {
-                    anime.rank.toString()
+                    tvRank.text = context.getString(R.string.rank, anime.rank)
                 }
-                tvRank.text = context.getString(R.string.rank, rank)
 
                 val score = if (anime.score == 0.0 || anime.score == null) {
                     context.getString(R.string.unknown_score)
                 } else {
                     anime.score.toString()
                 }
-                tvScore.text = context.getString(R.string.score, score)
+                tvScore.text = score
 
                 itemView.setOnClickListener {
                     onClick.invoke(anime)
@@ -71,7 +70,7 @@ class AnimeItemAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimeItemAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimeAdapter.ViewHolder {
         return ViewHolder(
             ItemAnimeBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -81,7 +80,7 @@ class AnimeItemAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: AnimeItemAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AnimeAdapter.ViewHolder, position: Int) {
         with(holder) {
             bind(dataList[position])
         }
