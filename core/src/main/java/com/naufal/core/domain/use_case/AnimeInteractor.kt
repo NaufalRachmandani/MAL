@@ -9,6 +9,7 @@ import com.naufal.core.domain.model.anime_characters.CharacterData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 class AnimeInteractor(private val animeRepository: AnimeRepository) : AnimeUseCase {
     override fun getAnimeTop(): Flow<Resource<List<Anime>>> = animeRepository.getAnimeTop()
@@ -27,11 +28,6 @@ class AnimeInteractor(private val animeRepository: AnimeRepository) : AnimeUseCa
     override suspend fun deleteAnime(anime: Anime) =
         animeRepository.deleteAnime(animeEntity = anime.toAnimeEntity())
 
-    override fun getAnimeFavorite(): Flow<List<Anime>> = flow {
-        var animeList: List<Anime> = emptyList()
-        animeRepository.getAnimeFavorite().collect { list ->
-            animeList = list.map { it.toAnime() }
-        }
-        emit(animeList)
-    }
+    override fun getAnimeFavorite(): Flow<List<Anime>> =
+        animeRepository.getAnimeFavorite().map { it.map { animeEntity -> animeEntity.toAnime() } }
 }

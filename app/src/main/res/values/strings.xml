@@ -32,4 +32,5 @@
     <string name="character_name">Character Name</string>
     <string name="main">Main</string>
     <string name="voice_actor_name">Voice Actor Name</string>
+    <string name="title_favorite">Favorite</string>
 </resources>

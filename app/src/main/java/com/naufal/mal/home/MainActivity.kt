@@ -1,6 +1,7 @@
 package com.naufal.mal.home
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         installSplashScreen().apply {
-            setKeepVisibleCondition {
+            setKeepOnScreenCondition {
                 homeViewModel.isLoading.value ?: false
             }
         }
@@ -74,7 +75,8 @@ class MainActivity : AppCompatActivity() {
         binding.run {
             toolbar.btnAction.visibility = View.VISIBLE
             toolbar.btnAction.setOnClickListener {
-
+                val uri = Uri.parse("mal://favorite")
+                startActivity(Intent(Intent.ACTION_VIEW, uri))
             }
 
             refresh.run {
