@@ -1,42 +1,53 @@
 package com.naufal.mal.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.naufal.core.data.source.remote.Resource
 import com.naufal.core.domain.model.anime.Anime
 import com.naufal.mal.R
-import com.naufal.mal.databinding.ActivityDetailAnimeBinding
+import com.naufal.mal.databinding.FragmentDetailAnimeBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DetailAnimeActivity : AppCompatActivity() {
+class DetailAnimeFragment : Fragment() {
 
-    private lateinit var binding: ActivityDetailAnimeBinding
-    private lateinit var anime: Anime
+    private var _binding: FragmentDetailAnimeBinding? = null
+    private val binding get() = _binding!!
+
+    private val args: DetailAnimeFragmentArgs by navArgs()
 
     private val detailAnimeViewModel by viewModel<DetailAnimeViewModel>()
+    private lateinit var anime: Anime
 
     private val adapter by lazy {
         CharacterAdapter(
-            context = this
+            context = requireContext()
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentDetailAnimeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        binding = ActivityDetailAnimeBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        anime = intent.getParcelableExtra(ANIME) ?: Anime()
-
+        anime = args.anime
         detailAnimeViewModel.getCharacters(anime.malId.toString())
         detailAnimeViewModel.isInFavorite(anime)
 
@@ -45,7 +56,7 @@ class DetailAnimeActivity : AppCompatActivity() {
     }
 
     private fun initiateObserver() {
-        detailAnimeViewModel.character.observe(this) {
+        detailAnimeViewModel.character.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
                     showError(false)
@@ -64,7 +75,7 @@ class DetailAnimeActivity : AppCompatActivity() {
             }
         }
 
-        detailAnimeViewModel.favorite.observe(this) {
+        detailAnimeViewModel.favorite.observe(viewLifecycleOwner) {
             if (it) {
                 binding.toolbar.btnAction.setImageResource(R.drawable.ic_baseline_favorite_24)
             } else {
@@ -79,7 +90,7 @@ class DetailAnimeActivity : AppCompatActivity() {
                 toolbarTitle.text = anime.title
                 btnBack.visibility = View.VISIBLE
                 btnBack.setOnClickListener {
-                    onBackPressed()
+                    findNavController().popBackStack()
                 }
                 btnAction.visibility = View.VISIBLE
                 btnAction.setOnClickListener {
@@ -91,7 +102,7 @@ class DetailAnimeActivity : AppCompatActivity() {
                 }
             }
 
-            Glide.with(this@DetailAnimeActivity)
+            Glide.with(requireContext())
                 .load(anime.images?.jpg?.imageUrl)
                 .placeholder(R.drawable.mal_logo)
                 .error(R.drawable.ic_baseline_error_24)
@@ -132,7 +143,7 @@ class DetailAnimeActivity : AppCompatActivity() {
                 }
             }
 
-            rvCharacter.layoutManager = LinearLayoutManager(this@DetailAnimeActivity)
+            rvCharacter.layoutManager = LinearLayoutManager(requireContext())
             rvCharacter.setHasFixedSize(true)
             rvCharacter.adapter = adapter
         }
@@ -170,7 +181,8 @@ class DetailAnimeActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        const val ANIME = ""
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

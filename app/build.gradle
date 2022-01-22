@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 apply from: '../shared_dependencies.gradle'
@@ -41,4 +42,5 @@ android {
 
 dependencies {
     implementation project(":core")
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }

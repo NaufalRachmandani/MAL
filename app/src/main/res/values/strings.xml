@@ -33,4 +33,6 @@
     <string name="main">Main</string>
     <string name="voice_actor_name">Voice Actor Name</string>
     <string name="title_favorite">Favorite</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

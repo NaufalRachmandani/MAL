@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.naufal.mal.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_detailAnimeFragment"
+            app:destination="@id/detailAnimeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailAnimeFragment"
+        android:name="com.naufal.mal.detail.DetailAnimeFragment"
+        android:label="fragment_detail_anime"
+        tools:layout="@layout/fragment_detail_anime" >
+        <argument
+            android:name="anime"
+            app:argType="com.naufal.core.domain.model.anime.Anime" />
+    </fragment>
+</navigation>

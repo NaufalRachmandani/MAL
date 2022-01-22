@@ -4,54 +4,54 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.naufal.core.data.source.remote.Resource
-import com.naufal.mal.databinding.ActivityMainBinding
-import com.naufal.mal.detail.DetailAnimeActivity
+import com.naufal.mal.databinding.FragmentHomeBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+class HomeFragment : Fragment() {
 
-class MainActivity : AppCompatActivity() {
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     private val homeViewModel: HomeViewModel by viewModel()
-    private lateinit var binding: ActivityMainBinding
 
     private val adapter by lazy {
         AnimeAdapter(
-            context = this,
+            context = requireContext(),
             onClick = {
-                val intent = Intent(this, DetailAnimeActivity::class.java)
-                intent.putExtra(DetailAnimeActivity.ANIME, it)
-                startActivity(intent)
+                val action = HomeFragmentDirections.actionHomeFragmentToDetailAnimeFragment(anime = it)
+                findNavController().navigate(action)
             },
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        installSplashScreen().apply {
-            setKeepOnScreenCondition {
-                homeViewModel.isLoading.value ?: false
-            }
-        }
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         initiateObserver()
         initiateUI()
     }
 
     private fun initiateObserver() {
-        homeViewModel.animeTop.observe(this) {
+        homeViewModel.animeTop.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
                     showError(false)
@@ -75,8 +75,8 @@ class MainActivity : AppCompatActivity() {
         binding.run {
             toolbar.btnAction.visibility = View.VISIBLE
             toolbar.btnAction.setOnClickListener {
-                val uri = Uri.parse("mal://favorite")
-                startActivity(Intent(Intent.ACTION_VIEW, uri))
+//                val uri = Uri.parse("mal://favorite")
+//                startActivity(Intent(Intent.ACTION_VIEW, uri))
             }
 
             refresh.run {
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            rvAnime.layoutManager = LinearLayoutManager(this@MainActivity)
+            rvAnime.layoutManager = LinearLayoutManager(requireContext())
             rvAnime.setHasFixedSize(true)
             rvAnime.adapter = adapter
         }
@@ -126,5 +126,10 @@ class MainActivity : AppCompatActivity() {
                 shimmerViewContainer.visibility = View.GONE
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
