@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_homeFragment_to_detailAnimeFragment"
             app:destination="@id/detailAnimeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_favoriteGraph"
+            app:destination="@id/favoriteGraph" />
     </fragment>
     <fragment
         android:id="@+id/detailAnimeFragment"
@@ -22,4 +25,8 @@
             android:name="anime"
             app:argType="com.naufal.core.domain.model.anime.Anime" />
     </fragment>
+    <include-dynamic
+        android:id="@+id/favoriteGraph"
+        app:moduleName="favorite"
+        app:graphResName="favorite_graph" />
 </navigation>

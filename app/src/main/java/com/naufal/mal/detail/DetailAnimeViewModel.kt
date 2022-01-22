@@ -40,14 +40,12 @@ class DetailAnimeViewModel(private val animeUseCase: AnimeUseCase) : ViewModel()
             if (anime.malId != null && anime.malId != 0) {
                 animeUseCase.insertAnime(anime)
             }
-            isInFavorite(anime)
         }
     }
 
     fun deleteAnime(anime: Anime) {
         viewModelScope.launch(Dispatchers.IO) {
             animeUseCase.deleteAnime(anime)
-            isInFavorite(anime)
         }
     }
 
