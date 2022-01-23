@@ -1,4 +1,4 @@
-package com.naufal.favorite
+package com.naufal.favorite.favorite
 
 import android.util.Log
 import androidx.lifecycle.LiveData

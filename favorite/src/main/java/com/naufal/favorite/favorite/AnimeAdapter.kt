@@ -1,4 +1,4 @@
-package com.naufal.favorite
+package com.naufal.favorite.favorite
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -70,7 +70,7 @@ class AnimeAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimeAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ItemAnimeBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -80,7 +80,7 @@ class AnimeAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: AnimeAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             bind(dataList[position])
         }

@@ -1,4 +1,4 @@
-package com.naufal.favorite
+package com.naufal.favorite.favorite
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,10 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.naufal.favorite.R
 import com.naufal.favorite.databinding.FragmentFavoriteBinding
 import com.naufal.favorite.di.favoriteModule
-import com.naufal.mal.databinding.FragmentHomeBinding
-import com.naufal.mal.home.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.GlobalContext
 
@@ -25,8 +24,9 @@ class FavoriteFragment : Fragment() {
         AnimeAdapter(
             context = requireContext(),
             onClick = {
-//                val action = HomeFragmentDirections.actionHomeFragmentToDetailAnimeFragment(anime = it)
-//                findNavController().navigate(action)
+                val action =
+                    FavoriteFragmentDirections.actionFavoriteFragmentToDetailAnimeFragment(it)
+                findNavController().navigate(action)
             },
         )
     }
@@ -56,10 +56,12 @@ class FavoriteFragment : Fragment() {
 
     private fun initiateUI() {
         binding.run {
-            toolbar.toolbarTitle.text = getString(R.string.favorite_anime)
-            toolbar.btnBack.visibility = View.VISIBLE
-            toolbar.btnBack.setOnClickListener {
-
+            toolbar.apply {
+                toolbarTitle.text = getString(R.string.favorite_anime)
+                btnBack.visibility = View.VISIBLE
+                btnBack.setOnClickListener {
+                    findNavController().popBackStack()
+                }
             }
 
             rvAnime.layoutManager = LinearLayoutManager(requireContext())
