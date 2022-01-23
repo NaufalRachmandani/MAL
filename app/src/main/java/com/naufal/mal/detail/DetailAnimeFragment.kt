@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.naufal.core.data.source.remote.Resource
 import com.naufal.core.domain.model.anime.Anime
-import com.naufal.favorite.detail.DetailAnimeFragmentArgs
 import com.naufal.mal.R
 import com.naufal.mal.databinding.FragmentDetailAnimeBinding
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +19,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.context.GlobalContext
 
 class DetailAnimeFragment : Fragment() {
 

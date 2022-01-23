@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailAnimeFragment"
-        android:name="com.naufal.favorite.detail.DetailAnimeFragment"
+        android:name="com.naufal.mal.detail.DetailAnimeFragment"
         android:label="fragment_detail_anime"
         tools:layout="@layout/fragment_detail_anime">
         <argument
