@@ -1,7 +1,6 @@
-package com.naufal.mal.home
+package com.naufal.mal.search
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,25 +8,26 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.naufal.core.data.source.remote.Resource
-import com.naufal.mal.databinding.FragmentHomeBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.naufal.mal.databinding.FragmentSearchAnimeBinding
+import com.naufal.mal.home.AnimeAdapter
+import com.naufal.mal.utils.debounceSearch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() {
+class SearchAnimeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentSearchAnimeBinding? = null
     private val binding get() = _binding!!
 
-    private val homeViewModel: HomeViewModel by viewModel()
+    private val searchAnimeViewModel by viewModel<SearchAnimeViewModel>()
 
     private val adapter by lazy {
         AnimeAdapter(
             context = requireContext(),
             onClick = {
-                val action = HomeFragmentDirections.actionHomeFragmentToDetailAnimeFragment(anime = it)
+                val action =
+                    SearchAnimeFragmentDirections.actionSearchAnimeFragmentToDetailAnimeFragment(
+                        anime = it
+                    )
                 findNavController().navigate(action)
             },
         )
@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentSearchAnimeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -49,49 +49,46 @@ class HomeFragment : Fragment() {
     }
 
     private fun initiateObserver() {
-        homeViewModel.animeTop.observe(viewLifecycleOwner) {
-            when (it) {
-                is Resource.Loading -> {
-                    showError(false)
-                    showShimmer(true)
-                }
-                is Resource.Error -> {
-                    showError(true)
-                    showShimmer(false)
-                    binding.tvError.text = it.message
-                }
-                is Resource.Success -> {
-                    showError(false)
-                    showShimmer(false)
-                    adapter.setList(it.data ?: mutableListOf())
-                }
-            }
-        }
+
     }
 
     private fun initiateUI() {
         binding.run {
-            toolbar.apply {
-                btnAction.visibility = View.VISIBLE
-                btnAction.setOnClickListener {
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFavoriteGraph())
-                }
-                btnSearch.visibility = View.VISIBLE
-                btnSearch.setOnClickListener {
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchAnimeFragment())
-                }
+            btnBack.setOnClickListener {
+                findNavController().popBackStack()
             }
 
-            refresh.run {
-                setOnRefreshListener {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        Log.i("MainActivity", "refresh: ")
-                        homeViewModel.getAnimeTop()
-                        delay(2000)
-                        isRefreshing = false
+            etSearch.debounceSearch(
+                lifecycle,
+                onDebouncingQueryTextChange = {
+                    val query = it.trim()
+                    if (query.isNotEmpty()) {
+                        searchAnimeViewModel.searchAnime(query)
+                    } else {
+                        searchAnimeViewModel.searchAnime("a")
+                    }
+                }
+            )
+
+            searchAnimeViewModel.searchAnime.observe(viewLifecycleOwner) {
+                when (it) {
+                    is Resource.Loading -> {
+                        showError(false)
+                        showShimmer(true)
+                    }
+                    is Resource.Error -> {
+                        showError(true)
+                        showShimmer(false)
+                        binding.tvError.text = it.message
+                    }
+                    is Resource.Success -> {
+                        showError(false)
+                        showShimmer(false)
+                        adapter.setList(it.data ?: mutableListOf())
                     }
                 }
             }
+
 
             rvAnime.layoutManager = LinearLayoutManager(requireContext())
             rvAnime.setHasFixedSize(true)
@@ -112,7 +109,7 @@ class HomeFragment : Fragment() {
             }
 
             btnTryAgain.setOnClickListener {
-                homeViewModel.getAnimeTop()
+                searchAnimeViewModel.searchAnime(etSearch.text?.toString() ?: "")
             }
         }
     }
@@ -131,8 +128,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 }

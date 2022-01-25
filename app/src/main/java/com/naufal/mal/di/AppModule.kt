@@ -4,6 +4,7 @@ import com.naufal.core.domain.use_case.AnimeInteractor
 import com.naufal.core.domain.use_case.AnimeUseCase
 import com.naufal.mal.detail.DetailAnimeViewModel
 import com.naufal.mal.home.HomeViewModel
+import com.naufal.mal.search.SearchAnimeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -14,4 +15,5 @@ val useCaseModule = module {
 val viewModelModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { DetailAnimeViewModel(get()) }
+    viewModel { SearchAnimeViewModel(get()) }
 }
