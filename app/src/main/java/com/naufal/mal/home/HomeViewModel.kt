@@ -15,7 +15,7 @@ class HomeViewModel(
     private val animeUseCase: AnimeUseCase
 ) : ViewModel() {
 
-    private val _isLoading = MutableLiveData<Boolean>(true)
+    private val _isLoading = MutableLiveData(true)
     val isLoading: LiveData<Boolean> = _isLoading
 
     private val _animeTop = MutableLiveData<Resource<List<Anime>>>()

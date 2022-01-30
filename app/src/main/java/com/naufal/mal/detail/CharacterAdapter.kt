@@ -5,13 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.naufal.core.domain.model.anime.Anime
-import com.naufal.core.domain.model.anime_characters.Character
 import com.naufal.core.domain.model.anime_characters.CharacterData
 import com.naufal.mal.R
-import com.naufal.mal.databinding.ItemAnimeBinding
 import com.naufal.mal.databinding.ItemCharacterBinding
-import com.naufal.mal.home.AnimeAdapter
 import java.util.*
 
 class CharacterAdapter(

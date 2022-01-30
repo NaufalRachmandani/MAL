@@ -9,10 +9,6 @@ import com.naufal.core.data.source.remote.Resource
 import com.naufal.core.domain.model.anime.Anime
 import com.naufal.core.domain.use_case.AnimeUseCase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 

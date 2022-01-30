@@ -19,16 +19,6 @@ class Converter {
     }
 
     @TypeConverter
-    fun fromJpgEntity(jpgEntity: JpgEntity): String {
-        return Gson().toJson(jpgEntity)
-    }
-
-    @TypeConverter
-    fun toJpgEntity(json: String): JpgEntity {
-        return Gson().fromJson(json, JpgEntity::class.java)
-    }
-
-    @TypeConverter
     fun fromGenreEntityList(list: List<GenreEntity>): String {
         return Gson().toJson(list)
     }

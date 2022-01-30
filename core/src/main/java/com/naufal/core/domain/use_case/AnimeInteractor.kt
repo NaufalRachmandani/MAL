@@ -7,8 +7,6 @@ import com.naufal.core.domain.AnimeRepository
 import com.naufal.core.domain.model.anime.Anime
 import com.naufal.core.domain.model.anime_characters.CharacterData
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class AnimeInteractor(private val animeRepository: AnimeRepository) : AnimeUseCase {
