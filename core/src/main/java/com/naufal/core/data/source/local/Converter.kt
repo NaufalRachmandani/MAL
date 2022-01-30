@@ -4,7 +4,6 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.naufal.core.data.source.local.model.anime.GenreEntity
 import com.naufal.core.data.source.local.model.anime.ImagesEntity
-import com.naufal.core.data.source.local.model.anime.JpgEntity
 
 class Converter {
 
