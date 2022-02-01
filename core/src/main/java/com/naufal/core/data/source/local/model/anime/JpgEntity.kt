@@ -2,13 +2,17 @@ package com.naufal.core.data.source.local.model.anime
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 import com.naufal.core.domain.model.anime.Jpg
 
 @Entity
 data class JpgEntity(
+    @SerializedName("image_url")
     @PrimaryKey
     val imageUrl: String? = "",
+    @SerializedName("large_imageUrl")
     val largeImageUrl: String? = "",
+    @SerializedName("small_imageUrl")
     val smallImageUrl: String? = ""
 )
 

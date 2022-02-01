@@ -26,7 +26,6 @@ class HomeViewModel(
     }
 
     fun getAnimeTop() {
-        Log.i("HomeViewModel", "getAnimeTop: called")
         viewModelScope.launch(Dispatchers.IO) {
             animeUseCase.getAnimeTop()
                 .onStart {
@@ -37,7 +36,7 @@ class HomeViewModel(
                     _isLoading.postValue(false)
                     _animeTop.postValue(Resource.Error("${it.message}"))
                 }.collect {
-                    Log.i("HomeViewModel", "getAnimeTop: collect")
+                    Log.i("HomeViewModel", "getAnimeTop: collect ${it.data}")
                     _isLoading.postValue(false)
                     _animeTop.postValue(it)
                 }
