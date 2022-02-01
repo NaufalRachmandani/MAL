@@ -1,16 +1,7 @@
 ##---------------Begin: proguard configuration for SQLCipher  ----------
 -keep,includedescriptorclasses class net.sqlcipher.** { *; }
 -keep,includedescriptorclasses interface net.sqlcipher.** { *; }
--keep class com.naufal.core.domain.model.anime.Anime
--keep class com.naufal.core.domain.model.anime.Genre
--keep class com.naufal.core.domain.model.anime.Images
--keep class com.naufal.core.domain.model.anime.Jpg
--keep class com.naufal.core.domain.model.anime_characters.Character
--keep class com.naufal.core.domain.model.anime_characters.CharacterData
--keep class com.naufal.core.domain.model.anime_characters.Images
--keep class com.naufal.core.domain.model.anime_characters.Jpg
--keep class com.naufal.core.domain.model.anime_characters.Person
--keep class com.naufal.core.domain.model.anime_characters.VoiceActor
+-keep class com.naufal.core.domain.model.anime.Anime {*;}
 
  
 ##---------------Begin: proguard configuration for Gson  ----------
