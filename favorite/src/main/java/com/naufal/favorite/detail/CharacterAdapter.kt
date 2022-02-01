@@ -1,4 +1,4 @@
-package com.naufal.mal.detail
+package com.naufal.favorite.detail
 
 import android.content.Context
 import android.view.LayoutInflater

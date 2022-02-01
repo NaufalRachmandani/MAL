@@ -1,4 +1,4 @@
-package com.naufal.mal.detail
+package com.naufal.favorite.detail
 
 import android.os.Bundle
 import android.util.Log
