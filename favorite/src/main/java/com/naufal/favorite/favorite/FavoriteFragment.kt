@@ -22,12 +22,7 @@ class FavoriteFragment : Fragment() {
 
     private val adapter by lazy {
         AnimeAdapter(
-            context = requireContext(),
-            onClick = {
-                val action =
-                    FavoriteFragmentDirections.actionFavoriteFragmentToDetailAnimeFragment(it)
-                findNavController().navigate(action)
-            },
+            context = requireContext()
         )
     }
 
@@ -50,7 +45,7 @@ class FavoriteFragment : Fragment() {
 
     private fun initiateObserver() {
         favoriteViewModel.favoriteAnimeList.observe(viewLifecycleOwner) {
-            adapter.setList(it)
+            adapter.differ.submitList(it)
         }
     }
 
@@ -62,6 +57,12 @@ class FavoriteFragment : Fragment() {
                 btnBack.setOnClickListener {
                     findNavController().popBackStack()
                 }
+            }
+
+            adapter.setOnItemClickListener {
+                val action =
+                    FavoriteFragmentDirections.actionFavoriteFragmentToDetailAnimeFragment(it)
+                findNavController().navigate(action)
             }
 
             rvAnime.layoutManager = LinearLayoutManager(requireContext())

@@ -22,14 +22,7 @@ class SearchAnimeFragment : Fragment() {
 
     private val adapter by lazy {
         AnimeAdapter(
-            context = requireContext(),
-            onClick = {
-                val action =
-                    SearchAnimeFragmentDirections.actionSearchAnimeFragmentToDetailAnimeFragment(
-                        anime = it
-                    )
-                findNavController().navigate(action)
-            },
+            context = requireContext()
         )
     }
 
@@ -58,6 +51,14 @@ class SearchAnimeFragment : Fragment() {
                 findNavController().popBackStack()
             }
 
+            adapter.setOnItemClickListener {
+                val action =
+                    SearchAnimeFragmentDirections.actionSearchAnimeFragmentToDetailAnimeFragment(
+                        anime = it
+                    )
+                findNavController().navigate(action)
+            }
+
             etSearch.debounceSearch(
                 lifecycle,
                 onDebouncingQueryTextChange = {
@@ -84,7 +85,7 @@ class SearchAnimeFragment : Fragment() {
                     is Resource.Success -> {
                         showError(false)
                         showShimmer(false)
-                        adapter.setList(it.data ?: mutableListOf())
+                        adapter.differ.submitList(it.data ?: mutableListOf())
                     }
                 }
             }

@@ -25,11 +25,7 @@ class HomeFragment : Fragment() {
 
     private val adapter by lazy {
         AnimeAdapter(
-            context = requireContext(),
-            onClick = {
-                val action = HomeFragmentDirections.actionHomeFragmentToDetailAnimeFragment(anime = it)
-                findNavController().navigate(action)
-            },
+            context = requireContext()
         )
     }
 
@@ -63,7 +59,7 @@ class HomeFragment : Fragment() {
                 is Resource.Success -> {
                     showError(false)
                     showShimmer(false)
-                    adapter.setList(it.data ?: mutableListOf())
+                    adapter.differ.submitList(it.data ?: mutableListOf())
                 }
             }
         }
@@ -80,6 +76,11 @@ class HomeFragment : Fragment() {
                 btnSearch.setOnClickListener {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSearchAnimeFragment())
                 }
+            }
+
+            adapter.setOnItemClickListener {
+                val action = HomeFragmentDirections.actionHomeFragmentToDetailAnimeFragment(anime = it)
+                findNavController().navigate(action)
             }
 
             refresh.run {

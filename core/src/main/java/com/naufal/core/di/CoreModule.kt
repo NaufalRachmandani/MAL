@@ -6,6 +6,8 @@ import com.naufal.core.data.AnimeRepositoryImpl
 import com.naufal.core.data.source.local.AnimeDatabase
 import com.naufal.core.data.source.remote.MyAnimeListApi
 import com.naufal.core.domain.AnimeRepository
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -17,10 +19,14 @@ import java.util.concurrent.TimeUnit
 val databaseModule = module {
     factory { get<AnimeDatabase>().animeDao() }
     single {
+        val passphrase: ByteArray = SQLiteDatabase.getBytes("MAL".toCharArray())
+        val factory = SupportFactory(passphrase)
         Room.databaseBuilder(
             androidContext(),
             AnimeDatabase::class.java, AnimeDatabase.DATABASE_NAME
-        ).fallbackToDestructiveMigration().build()
+        ).fallbackToDestructiveMigration()
+            .openHelperFactory(factory)
+            .build()
     }
 }
 

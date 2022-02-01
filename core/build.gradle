@@ -46,4 +46,7 @@ dependencies {
     kapt "androidx.room:room-compiler:2.4.1"
     // Kotlin Extensions and Coroutines support for Room
     api "androidx.room:room-ktx:2.4.1"
+
+    implementation "net.zetetic:android-database-sqlcipher:4.4.0"
+    implementation "androidx.sqlite:sqlite-ktx:2.1.0"
 }

@@ -3,24 +3,17 @@ package com.naufal.favorite.favorite
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.naufal.core.domain.model.anime.Anime
 import com.naufal.mal.R
 import com.naufal.mal.databinding.ItemAnimeBinding
-import java.util.*
 
 class AnimeAdapter(
-    private val context: Context,
-    private val onClick: (Anime) -> Unit,
+    private val context: Context
 ) : RecyclerView.Adapter<AnimeAdapter.ViewHolder>() {
-
-    private var dataList: List<Anime> = Collections.emptyList()
-
-    fun setList(newList: List<Anime>) {
-        this.dataList = newList
-        notifyDataSetChanged()
-    }
 
     inner class ViewHolder(private val binding: ItemAnimeBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -64,11 +57,23 @@ class AnimeAdapter(
                 tvScore.text = score
 
                 itemView.setOnClickListener {
-                    onClick.invoke(anime)
+                    onItemClickListener?.invoke(anime)
                 }
             }
         }
     }
+
+    private val differCallback = object : DiffUtil.ItemCallback<Anime>() {
+        override fun areItemsTheSame(oldItem: Anime, newItem: Anime): Boolean {
+            return oldItem.url == newItem.url
+        }
+
+        override fun areContentsTheSame(oldItem: Anime, newItem: Anime): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -82,9 +87,15 @@ class AnimeAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
-            bind(dataList[position])
+            bind(differ.currentList[position])
         }
     }
 
-    override fun getItemCount(): Int = dataList.size
+    override fun getItemCount(): Int = differ.currentList.size
+
+    private var onItemClickListener: ((Anime) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Anime) -> Unit) {
+        onItemClickListener = listener
+    }
 }
