@@ -35,5 +35,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //debug
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
+    //leak canary can't use newer version
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 }
