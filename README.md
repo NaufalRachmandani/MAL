@@ -1,3 +1,4 @@
 # MAL
 for submission Menjadi Android Developer Expert
-[![naufalrachmandani](https://github.com/NaufalRachmandani/MAL.svg?style=svg)](https://github.com/NaufalRachmandani/MAL)
+
+[![CircleCI](https://circleci.com/gh/NaufalRachmandani/MAL/tree/main.svg?style=shield)](https://circleci.com/gh/NaufalRachmandani/MAL/tree/main)
