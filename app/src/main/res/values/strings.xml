@@ -10,7 +10,7 @@
     <string name="unknown_season">Unknown Season</string>
     <string name="unknown_year">Unknown Year</string>
     <string name="season_year">%s %s</string>
-    <string name="rank">Rank %d</string>
+    <string name="rank">Rank %s</string>
     <string name="unknown_rank">Unknown Rank</string>
     <string name="score">8.32</string>
     <string name="unknown_score">--</string>
@@ -32,6 +32,5 @@
     <string name="character_name">Character Name</string>
     <string name="main">Main</string>
     <string name="voice_actor_name">Voice Actor Name</string>
-    <string name="title_favorite">Favorite</string>
     <string name="search_button">Search Button</string>
 </resources>

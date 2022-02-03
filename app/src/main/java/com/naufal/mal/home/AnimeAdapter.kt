@@ -46,7 +46,8 @@ class AnimeAdapter(
                 if (anime.rank == 0 || anime.rank == null) {
                     tvRank.text = context.getString(R.string.unknown_rank)
                 } else {
-                    tvRank.text = context.getString(R.string.rank, anime.rank)
+                    val temp = anime.rank.toString()
+                    tvRank.text = context.getString(R.string.rank, temp)
                 }
 
                 val score = if (anime.score == 0.0 || anime.score == null) {

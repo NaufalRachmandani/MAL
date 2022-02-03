@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.naufal.core.data.source.remote.Resource
 import com.naufal.mal.databinding.FragmentHomeBinding
 import kotlinx.coroutines.delay

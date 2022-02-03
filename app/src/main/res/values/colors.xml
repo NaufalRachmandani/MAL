@@ -4,8 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary_dark">#0A276A</color>
     <color name="primary">#2E51A2</color>
-    <color name="primary_light">#C6D7FF</color>
-    <color name="transparent">#00000000</color>
     <color name="text">#272727</color>
     <color name="gray">#dddddd</color>
 </resources>
