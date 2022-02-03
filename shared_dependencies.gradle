@@ -36,5 +36,5 @@ dependencies {
 
     //debug
     //leak canary can't use newer version
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakCanary_version"
 }

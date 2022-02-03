@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".home.HomeFragment">
 
         <include
             android:id="@+id/toolbar"
@@ -77,14 +78,14 @@
             android:id="@+id/iv_error"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:visibility="gone"
             android:contentDescription="@string/error"
             android:src="@drawable/ic_baseline_error_24"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="0.4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintVertical_bias="0.4" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_error"
@@ -98,14 +99,13 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_try_again"
-            android:text="@string/refresh"
             style="@style/BaseButtonStyle"
-            android:visibility="gone"
             android:layout_marginTop="@dimen/very_small"
-            app:layout_constraintTop_toBottomOf="@id/tv_error"
+            android:text="@string/refresh"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/tv_error"
             app:layout_constraintStart_toStartOf="@id/tv_error"
-            app:layout_constraintEnd_toEndOf="@id/tv_error"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_error" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

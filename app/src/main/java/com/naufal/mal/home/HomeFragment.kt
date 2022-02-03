@@ -6,12 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.naufal.core.data.source.remote.Resource
 import com.naufal.mal.databinding.FragmentHomeBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -78,20 +78,21 @@ class HomeFragment : Fragment() {
                 }
             }
 
-            adapter.setOnItemClickListener {
-                val action = HomeFragmentDirections.actionHomeFragmentToDetailAnimeFragment(anime = it)
-                findNavController().navigate(action)
-            }
-
             refresh.run {
                 setOnRefreshListener {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        Log.i("MainActivity", "refresh: ")
+                    lifecycle.coroutineScope.launch {
+                        Log.i("HomeFragment", "refresh: ")
                         homeViewModel.getAnimeTop()
-                        delay(2000)
+                        delay(1000)
                         isRefreshing = false
                     }
                 }
+            }
+
+            adapter.setOnItemClickListener {
+                val action =
+                    HomeFragmentDirections.actionHomeFragmentToDetailAnimeFragment(anime = it)
+                findNavController().navigate(action)
             }
 
             rvAnime.layoutManager = LinearLayoutManager(requireContext())
@@ -132,7 +133,13 @@ class HomeFragment : Fragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        binding.refresh.isRefreshing = false
+    }
+
     override fun onDestroyView() {
+        binding.rvAnime.adapter = null
         super.onDestroyView()
         _binding = null
     }

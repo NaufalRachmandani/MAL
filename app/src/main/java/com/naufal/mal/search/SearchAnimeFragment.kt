@@ -42,7 +42,24 @@ class SearchAnimeFragment : Fragment() {
     }
 
     private fun initiateObserver() {
-
+        searchAnimeViewModel.searchAnime.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Loading -> {
+                    showError(false)
+                    showShimmer(true)
+                }
+                is Resource.Error -> {
+                    showError(true)
+                    showShimmer(false)
+                    binding.tvError.text = it.message
+                }
+                is Resource.Success -> {
+                    showError(false)
+                    showShimmer(false)
+                    adapter.differ.submitList(it.data ?: mutableListOf())
+                }
+            }
+        }
     }
 
     private fun initiateUI() {
@@ -70,26 +87,6 @@ class SearchAnimeFragment : Fragment() {
                     }
                 }
             )
-
-            searchAnimeViewModel.searchAnime.observe(viewLifecycleOwner) {
-                when (it) {
-                    is Resource.Loading -> {
-                        showError(false)
-                        showShimmer(true)
-                    }
-                    is Resource.Error -> {
-                        showError(true)
-                        showShimmer(false)
-                        binding.tvError.text = it.message
-                    }
-                    is Resource.Success -> {
-                        showError(false)
-                        showShimmer(false)
-                        adapter.differ.submitList(it.data ?: mutableListOf())
-                    }
-                }
-            }
-
 
             rvAnime.layoutManager = LinearLayoutManager(requireContext())
             rvAnime.setHasFixedSize(true)

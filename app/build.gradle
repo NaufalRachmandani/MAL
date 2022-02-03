@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
     id("androidx.navigation.safeargs.kotlin")
+    id("com.squareup.leakcanary.deobfuscation")
 }
 
 apply from: '../shared_dependencies.gradle'
@@ -27,7 +28,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -40,6 +41,12 @@ android {
     }
     buildFeatures {
         viewBinding true
+    }
+    leakCanary {
+        // LeakCanary needs to know which variants have obfuscation turned on
+        filterObfuscatedVariants { variant ->
+            variant.name == "debug"
+        }
     }
     dynamicFeatures = [':favorite']
 }

@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -92,6 +94,7 @@ class DetailAnimeFragment : Fragment() {
                 btnBack.setOnClickListener {
                     findNavController().popBackStack()
                 }
+                btnAction.setImageResource(R.drawable.ic_baseline_favorite_border_24)
                 btnAction.visibility = View.VISIBLE
                 btnAction.setOnClickListener {
                     if (detailAnimeViewModel.favorite.value == true) {
@@ -134,10 +137,10 @@ class DetailAnimeFragment : Fragment() {
 
             refresh.run {
                 setOnRefreshListener {
-                    CoroutineScope(Dispatchers.Main).launch {
-                        Log.i("DetailAnimeActivity", "refresh: ")
+                    lifecycle.coroutineScope.launch {
+                        Log.i("DetailAnimeFragment", "refresh: ")
                         detailAnimeViewModel.getCharacters(anime.malId.toString())
-                        delay(2000)
+                        delay(1000)
                         isRefreshing = false
                     }
                 }
@@ -182,6 +185,7 @@ class DetailAnimeFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        binding.rvCharacter.adapter = null
         super.onDestroyView()
         _binding = null
     }
