@@ -7,7 +7,7 @@ version: 2.1
 # Orbs are reusable packages of CircleCI configuration that you may share across projects, enabling you to create encapsulated, parameterized commands, jobs, and executors that can be used across multiple projects.
 # See: https://circleci.com/docs/2.0/orb-intro/
 orbs:
-  android: circleci/android@1.0.3
+  android: circleci/android@2.0.0
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
@@ -40,22 +40,23 @@ jobs:
       - run:
           name: Run Build
           command: ./gradlew build
+      - android/create-avd:
+          avd-name: myavd
+          install: true
+          system-image: system-images;android-29;default;x86
+      - android/start-emulator:
+          avd-name: myavd
+          no-window: true
+          restore-gradle-cache-prefix: v1a
+      - android/run-tests
+      - android/save-gradle-cache:
+          cache-prefix: v1a
       - store_artifacts: 
           path: app/build/reports
           destination: reports
       - run:
           name: Run Tests
           command: ./gradlew lint test
-      - run:
-          name: Setup emulator
-          command: sdkmanager "system-images;android-31;default;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-31;default;armeabi-v7a"
-      - run:
-          name: Launch emulator
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel on
-          background: true
-      - run:
-          name: Run Tests
-          command: ./gradlew :demo:connectedAndroidTest
       - store_test_results:
           path: app/build/test-results
       - store_artifacts:  
