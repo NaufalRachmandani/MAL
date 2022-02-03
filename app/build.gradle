@@ -48,6 +48,9 @@ android {
             variant.name == "debug"
         }
     }
+    lintOptions {
+        abortOnError false
+    }
     dynamicFeatures = [':favorite']
 }
 
